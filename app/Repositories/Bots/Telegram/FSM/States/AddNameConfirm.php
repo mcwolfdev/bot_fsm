@@ -72,9 +72,10 @@ class AddNameConfirm extends StateHandler
 
 
                 //TelegramBotContext::where(['telegram_id ', $this->update->user()->id])->update(['state' => 'AddName::Pause']);
+                $this->applyState("AddName::Pause");
                 $handler = new AddName($this->bot,$this->update);
                 $handler->run();
-                $this->applyState("AddName::Pause");
+
                 break;
 
             case 'confirm_name':
