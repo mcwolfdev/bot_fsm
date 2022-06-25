@@ -70,9 +70,9 @@ class StateHandler extends UpdateHandler
     public function handle()
     {
 
-        $persona = User::where('telegram_id', $this->update->user()->id)->first();
+        $users = User::where('telegram_id', $this->update->user()->id)->first();
 
-        if (empty($persona->telegram_id)){
+        if (empty($users->telegram_id)){
             User::create([
                 'name' => $this->update->user()->first_name,
                 'last_name' => $this->update->user()->first_name,
@@ -80,12 +80,6 @@ class StateHandler extends UpdateHandler
                 'telegram_id' => $this->update->user()->id,
             ]);
         }
-
-/*        if ($this->update->message->text == '/start'){
-            TelegramBotContext::where('telegram_id', $this->update->user()->id)->update([
-                "state" => "start"
-            ]);
-        }*/
 
         switch ($this->getState()) {
             case 'start':
@@ -95,12 +89,6 @@ class StateHandler extends UpdateHandler
                 $handler = new MainMenu($this->bot, $this->update);
                 break;
             case 'AddName':
-                $handler = new AddName($this->bot, $this->update);
-                break;
-            case 'AddName::Pause':
-                $handler = new AddName($this->bot, $this->update);
-                break;
-            case 'AddName::Run':
                 $handler = new AddName($this->bot, $this->update);
                 break;
             case 'AddNameConfirm':

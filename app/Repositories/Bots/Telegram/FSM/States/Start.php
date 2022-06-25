@@ -4,14 +4,11 @@
 namespace App\Repositories\Bots\Telegram\FSM\States;
 
 
-use App\Models\TelegramBotContext;
 use App\Repositories\Bots\Telegram\FSM\StateHandler;
 
 
 class Start extends StateHandler
 {
-
-
 
     public function run()
     {
@@ -28,7 +25,7 @@ class Start extends StateHandler
             'parse_mode'=>'html'
             ]);
 
-            $this->applyState('AddName::Pause');
+            $this->applyState('AddName');
             $this->handle();
     }
 

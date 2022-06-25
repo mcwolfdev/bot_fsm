@@ -3,7 +3,6 @@
 
 namespace App\Repositories\Bots\Telegram\FSM\States;
 
-use App\Models\TelegramBotContext;
 use App\Repositories\Bots\Telegram\FSM\StateHandler;
 
 class AddName extends StateHandler
@@ -16,24 +15,14 @@ class AddName extends StateHandler
             'action' => 'typing'
         ]);
 
-
-        if ($this->getState() == 'AddName::Pause'){
             $this->sendMessage([
                 'text' => "📝 Введите <b>Имя</b>",
                 'parse_mode' => 'html',
             ]);
 
-            $this->applyState('AddName::Run');
-            return;
-        }
-
-        if ($this->getState() == 'AddName::Run'){
-
-            $handler = new AddNameConfirm($this->bot,$this->update);
-            $handler->run();
+            //$this->applyState('AddName::Run');
             $this->applyState('AddNameConfirm');
-
-        }
+            return;
     }
 
     public function processCallback()

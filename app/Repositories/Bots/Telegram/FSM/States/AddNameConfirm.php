@@ -67,11 +67,6 @@ class AddNameConfirm extends StateHandler
                     'message_id' => $this->update->callback_query->message->message_id
                 ]);
 
-                //$this->applyContext($this->context);
-                //$this->stateMachine->apply('to_AddName');
-
-
-                //TelegramBotContext::where(['telegram_id ', $this->update->user()->id])->update(['state' => 'AddName::Pause']);
                 $this->applyState("AddName::Pause");
                 $handler = new AddName($this->bot,$this->update);
                 $handler->run();
@@ -80,7 +75,7 @@ class AddNameConfirm extends StateHandler
 
             case 'confirm_name':
 
-                $this->okAndDelete(); // Галочка и удаление
+                $this->okAndDelete();
 
                 $names = User::where('telegram_id', $this->update->user()->id)->first();
 
@@ -89,17 +84,6 @@ class AddNameConfirm extends StateHandler
                     'text' => "✅ Вы ввели имя: <b>$names->last_name</b>",
                     'parse_mode' => 'html'
                 ]);
-
-
-
-                //$this->applyState("MainMenu");
-/*
-                User::where('telegram_id', $this->update->user()->id)->update([
-                    'name' => $this->update->user()->first_name,
-                    'last_name' => $persona->last_name,
-                    'username' => $this->update->user()->first_name,
-                    'telegram_id' => $this->update->user()->id,
-                ]);*/
 
                 $handler = new MainMenu($this->bot,$this->update);
                 $handler->run();
