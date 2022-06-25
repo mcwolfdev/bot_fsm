@@ -4,6 +4,7 @@
 namespace App\Repositories\Bots\Telegram\FSM\States;
 
 
+use App\Models\User;
 use WeStacks\TeleBot\Objects\InlineKeyboardButton;
 use WeStacks\TeleBot\Objects\Keyboard;
 use App\Repositories\Bots\Telegram\FSM\StateHandler;
@@ -55,8 +56,8 @@ class MainMenu extends StateHandler
                 ]);
                 break;
             case 'delete':
-                //$delUser = User::where('telegram_id', $this->update->user()->id)->first();
-                //$delUser->delete();
+                $delUser = User::where('telegram_id', $this->update->user()->id)->first();
+                $delUser->delete();
 
                 $this->applyState("start");
 
@@ -64,12 +65,11 @@ class MainMenu extends StateHandler
                     'text' => "✅<b> Удалено</b>",
                     'parse_mode' => 'html',
                 ]);
-                  //$handler = new Start($this->bot,$this->update);
-                  //$handler->run();
 
+                $this->applyState("start");
                 $handler = new Start($this->bot,$this->update);
                 $handler->run();
-                $this->applyState("start");
+                //$this->applyState("start");
                 break;
             default:
                 $this->sendMessage([

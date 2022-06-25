@@ -49,16 +49,16 @@ class StateHandler extends UpdateHandler
     }
 
     public function getState(){
-        $param = TelegramBotContext::where('telegram_id', $this->update->user()->id)->first();
+        $paramContext = TelegramBotContext::where('telegram_id', $this->update->user()->id)->first();
 
-        if (empty($param->state) || $param->state == null){
+        if (empty($paramContext->state) || $paramContext->state == null){
             TelegramBotContext::create([
                 'telegram_id' => $this->update->user()->id,
                 'state' => 'start',
             ]);
 
         }
-        return $param->state;
+        return $paramContext->state;
     }
 
     public static function trigger(Update $update, TeleBot $bot): bool

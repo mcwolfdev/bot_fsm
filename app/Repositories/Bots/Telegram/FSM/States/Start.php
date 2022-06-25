@@ -26,7 +26,9 @@ class Start extends StateHandler
             ]);
 
             $this->applyState('AddName');
-            $this->handle();
+            //$this->handle();
+            $handler = new AddName($this->bot,$this->update);
+            $handler->run();
     }
 
     public function processCallback()

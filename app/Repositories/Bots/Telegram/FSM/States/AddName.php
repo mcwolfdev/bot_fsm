@@ -20,7 +20,6 @@ class AddName extends StateHandler
                 'parse_mode' => 'html',
             ]);
 
-            //$this->applyState('AddName::Run');
             $this->applyState('AddNameConfirm');
             return;
     }
