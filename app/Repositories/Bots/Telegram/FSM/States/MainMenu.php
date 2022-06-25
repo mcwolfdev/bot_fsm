@@ -49,12 +49,6 @@ class MainMenu extends StateHandler
     {
         $choise = $this->update->callback_query->data;
         switch ($choise) {
-            case 'new':
-                $this->sendMessage([
-                    'text' => "callback_query <b>new</b>",
-                    'parse_mode' => 'html',
-                ]);
-                break;
             case 'delete':
                 $delUser = User::where('telegram_id', $this->update->user()->id)->first();
                 $delUser->delete();
@@ -69,7 +63,7 @@ class MainMenu extends StateHandler
                 $this->applyState("start");
                 $handler = new Start($this->bot,$this->update);
                 $handler->run();
-                //$this->applyState("start");
+
                 break;
             default:
                 $this->sendMessage([
@@ -78,14 +72,17 @@ class MainMenu extends StateHandler
                 ]);
                 break;
             case 'open':
+                $GetUser = User::where('telegram_id', $this->update->user()->id)->first();
+
                 $this->sendMessage([
-                    'text' => "callback_query <b>open</b>",
+                    'text' => "Имя: <b>".$GetUser->last_name."</b>",
                     'parse_mode' => 'html',
                 ]);
+
                 break;
             case 'test':
                 $this->sendMessage([
-                    'text' => "callback_query <b>test</b>)",
+                    'text' => "Это <b>test</b> сообщение",
                     'parse_mode' => 'html',
                 ]);
                 break;
